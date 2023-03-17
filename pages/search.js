@@ -5,7 +5,8 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import InfoCard from "../components/InfoCard";
 import { format, parseISO } from "date-fns";
-
+import Map from "../components/MapLibre";
+import MapLibreSecond from "../components/MapLibreSecond";
 function Search({ searchResults }) {
   const router = useRouter();
   const { location, startDate, endDate, noOfGuests } = router.query;
@@ -58,6 +59,11 @@ function Search({ searchResults }) {
               total={item.total}
             />
           ))}
+        </section>
+        <section className="hidden xl:inline-flex xl:min-w-[600px]">
+          {/* map */}
+          {/* <Map searchResults={searchResults} /> */}
+          <MapLibreSecond searchResults={searchResults} />
         </section>
       </main>
       <Footer />
