@@ -23,12 +23,12 @@ const Home = ({ exploreData, cardData }) => {
           <h2 className="text-4xl font-semibold pb-5">Explore Nearby</h2>
           {/* Pull some data from a server - API Endpoints */}
           <div className="grid grid-cols-1 sm:grid-cols-2 mlg:grid-cols-3 xl:grid-cols-4">
-            {exploreData?.map(({ img, distance, location }) => (
+            {exploreData.record.map((item) => (
               <SmallCard
-                key={img}
-                img={img}
-                distance={distance}
-                location={location}
+                key={item.img}
+                img={item.img}
+                distance={item.distance}
+                location={item.location}
               />
             ))}
           </div>
@@ -36,8 +36,8 @@ const Home = ({ exploreData, cardData }) => {
         <section>
           <h2 className="text-4xl font-semibold py-8">Live Anywhere</h2>
           <div className="flex space-x-4 p-3 -ml-3 overflow-scroll scrollbar-hide">
-            {cardData?.map(({ img, title }) => (
-              <MediumCard key={img} img={img} title={title} />
+            {cardData.record.map((item) => (
+              <MediumCard key={item.img} img={item.img} title={item.title} />
             ))}
           </div>
         </section>
@@ -52,13 +52,29 @@ const Home = ({ exploreData, cardData }) => {
     </div>
   );
 };
+// https://www.jsonkeeper.com/b/4G1G
+// https://www.jsonkeeper.com/b/VHHT
 export async function getStaticProps() {
-  const exploreData = await fetch("https://www.jsonkeeper.com/b/4G1G").then(
-    (res) => res.json()
-  );
-  const cardData = await fetch("https://www.jsonkeeper.com/b/VHHT").then(
-    (res) => res.json()
-  );
+  const exploreData = await fetch(
+    "https://api.jsonbin.io/v3/b/641073b3c0e7653a0587bd79",
+    {
+      method: "GET",
+      headers: {
+        "X-Master-Key":
+          "$2b$10$vQKqCgcAZz/eJv1Qhha.SeVtjpQd1RUVgHDJZnU/UhEfP7Na9htcu",
+      },
+    }
+  ).then((res) => res.json());
+  const cardData = await fetch(
+    "https://api.jsonbin.io/v3/b/6410762bace6f33a22eea7ff",
+    {
+      method: "GET",
+      headers: {
+        "X-Master-Key":
+          "$2b$10$vQKqCgcAZz/eJv1Qhha.SeVtjpQd1RUVgHDJZnU/UhEfP7Na9htcu",
+      },
+    }
+  ).then((res) => res.json());
   return {
     props: {
       exploreData,
